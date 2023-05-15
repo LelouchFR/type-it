@@ -1,8 +1,8 @@
-import { words } from './components/words';
+import { mots } from './components/words';
 import './style.scss';
 
 function getRandomWord(): string {
-    return words[Math.floor(Math.random() * words.length)];
+    return mots[Math.floor(Math.random() * mots.length)];
 }
 
 function CalculateWPM(keywords: number, time: number): number {
@@ -21,9 +21,8 @@ function CalculateAWPM(WPM: number, Acc: number): number {
 let WordsRight: number = 0;
 let Words: number = 0;
 let Keystrokes: number = 0;
-// @ts-ignore
-let KeystrokesCount: number = 0;
 let FalseKeystrokes: number = 0;
+let time: number = 0;
 
 function MainMenu(): string {
     return (`
@@ -69,7 +68,6 @@ if (textInput) {
         }
         Keystrokes++;
         AccElement.innerHTML = `Keystrokes: <span style="color: green">${Keystrokes - FalseKeystrokes}</span> / <span style="color: red">${FalseKeystrokes}</span>`;
-        WPM.textContent = `${CalculateAWPM(CalculateWPM(Keystrokes, 1), (CalculateAcc(Keystrokes - FalseKeystrokes, Keystrokes) / 100))} WPM`;
     });
 }
 
@@ -78,9 +76,11 @@ function countdown(): void {
     function tick(): void {
         if (counter) {
             seconds--;
+            time += (1/60);
             counter.innerHTML = "0:" + (seconds < 10 ? "0" : "") + String(seconds);
             if (seconds > 0) {
                 setTimeout(tick, 1000);
+                WPM.textContent = `${CalculateAWPM(CalculateWPM(Keystrokes, time), (CalculateAcc(Keystrokes - FalseKeystrokes, Keystrokes) / 100))} WPM`;
             } else {
                 textInput.disabled = true;
                 WPM.textContent = `${CalculateAWPM(CalculateWPM(Keystrokes, 1), (CalculateAcc(Keystrokes - FalseKeystrokes, Keystrokes) / 100))} WPM`;
@@ -91,11 +91,12 @@ function countdown(): void {
 }
 
 
-document.getElementById('resetButton')!.onclick = function(): void {
-    Words = 0;
-    WordsRight = 0;
-    Keystrokes = 0;
-    KeystrokesCount = 0;
-    MainMenu();
-    console.log("Works !")
+document.querySelector<HTMLButtonElement>('#resetButton')!.onclick = function(): void {
+    // Words = 0;
+    // WordsRight = 0;
+    // Keystrokes = 0;
+    // time = 0;
+    // MainMenu();
+    // console.log("Works !");
+    location.reload()
 }
