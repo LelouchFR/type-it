@@ -1,4 +1,105 @@
-*{
-    background: #000;
-    color: #fff;
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+
+$Major-Mono-Display: 'Major Mono Display', monospace;
+$primary-turquoise: #19535f;
+$secondary-turquoise: #0b7a75;
+$right-answer: #9bc53d;
+$wrong-answer: #e55934;
+$cursor-color: #f0f3f5;
+
+body {
+    text-align: center;
+    background-color: $secondary-turquoise;
+    color: $cursor-color;
+    font-family: $Major-Mono-Display;
+    margin: 0;
+
+    select {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 1rem;
+        color: $cursor-color;
+        background-color: $primary-turquoise;
+        font-family: $Major-Mono-Display;
+        padding: 7px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+    
+    .WordGen, .InputRest {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        width: 75%;
+        background-color: $primary-turquoise;
+    }
+
+    .WordGen {
+        padding: 1rem;
+        text-align: left;
+        opacity: 1;
+    }
+
+    .InputRest {
+        padding: 1rem;
+
+        input[type="text"] {
+            padding: .75rem;
+            border-radius: 15px;
+            border: none;
+            color: $cursor-color;
+            background-color: $secondary-turquoise;
+            font-family: $Major-Mono-Display;
+
+            &:focus {
+                outline: none;
+            }
+
+            &::placeholder {
+                color: $cursor-color;
+            }
+        }
+
+        #resetButton {
+            background-color: $secondary-turquoise;
+            padding: .75rem;
+            border-radius: 15px;
+            border: none;
+
+            i {
+                color: $right-answer;
+            }
+
+            &:focus {
+                outline: none;
+
+                i {
+                    color: $wrong-answer;
+                }
+            }
+        }
+    }
+}
+
+#GoodKeystrokes {color: $right-answer}
+#FalseKeystrokes {color: $wrong-answer}
+
+a {
+    color: $cursor-color;
+}
+
+.version {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.github_repo {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }

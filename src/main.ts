@@ -1,8 +1,38 @@
-import { mots } from './components/words';
+import { words, mots, worter, palabras } from './components/words';
 import './style.scss';
 
+// @ts-ignore
+let WordsRight: number = 0;
+// @ts-ignore
+let Words: number = 0;
+let Keystrokes: number = 0;
+let FalseKeystrokes: number = 0;
+let lang: string = "EN";
+let time: number = 0;
+
+const textInput: HTMLInputElement = document.querySelector<HTMLInputElement>('#textInput')!;
+const pElement: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>('#word')!;
+const AccElement: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>('#Acc')!;
+let WPM: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#WPM")!;
+let counter: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#timer")!;
+
 function getRandomWord(): string {
-    return mots[Math.floor(Math.random() * mots.length)];
+    let res: string = "";
+    switch (lang) {
+        case "FR":
+            res = mots[Math.floor(Math.random() * mots.length)];
+            break;
+        case "EN":
+            res = words[Math.floor(Math.random() * words.length)];
+            break;
+        case "DE":
+            res = worter[Math.floor(Math.random() * worter.length)];
+            break;
+        case "ES":
+            res = palabras[Math.floor(Math.random() * palabras.length)];
+            break;
+    }
+    return res;
 }
 
 function CalculateWPM(keywords: number, time: number): number {
@@ -17,22 +47,15 @@ function CalculateAWPM(WPM: number, Acc: number): number {
     return Math.ceil(WPM * Acc);
 }
 
-
-let WordsRight: number = 0;
-let Words: number = 0;
-let Keystrokes: number = 0;
-let FalseKeystrokes: number = 0;
-let time: number = 0;
-
 function MainMenu(): string {
     return (`
-        <section>
+        <section class="WordGen">
             <p id="word">${getRandomWord()}</p>
-            <p id="Acc">Keystrokes: <span style="color: green">${Keystrokes - FalseKeystrokes}</span> / <span style="color: red">${FalseKeystrokes}</span></p>
         </section>
-        <section>
+        <section class="InputRest">
             <input id="textInput" autocomplete="off" type="text" placeholder="start typing to race"/>
-            <input id="resetButton" type="button" value="reset" />
+            <button id="resetButton"><i class="fa-solid fa-arrows-rotate"></i></button>
+            <p id="Acc">Keystrokes: <span id="GoodKeystrokes">${Keystrokes - FalseKeystrokes}</span> / <span id="FalseKeystrokes">${FalseKeystrokes}</span></p>
             <p id="timer">1:00</p>
             <p id="WPM">0 WPM</p>
         </section>
@@ -41,16 +64,10 @@ function MainMenu(): string {
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = MainMenu();
 
-const textInput: HTMLInputElement = document.querySelector<HTMLInputElement>('#textInput')!;
-const pElement: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>('#word')!;
-const AccElement: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>('#Acc')!;
-let WPM: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#WPM")!;
-let counter: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#timer")!;
-
 if (textInput) {
     textInput.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
-            Words++
+            Words++;
             if (textInput.value.replace(" ", "") === pElement.textContent) {
                 WordsRight++;
             } else {
@@ -67,7 +84,7 @@ if (textInput) {
             countdown();
         }
         Keystrokes++;
-        AccElement.innerHTML = `Keystrokes: <span style="color: green">${Keystrokes - FalseKeystrokes}</span> / <span style="color: red">${FalseKeystrokes}</span>`;
+        AccElement.innerHTML = `Keystrokes: <span id="GoodKeystrokes">${Keystrokes - FalseKeystrokes}</span> / <span id="FalseKeystrokes">${FalseKeystrokes}</span>`;
     });
 }
 
@@ -92,11 +109,5 @@ function countdown(): void {
 
 
 document.querySelector<HTMLButtonElement>('#resetButton')!.onclick = function(): void {
-    // Words = 0;
-    // WordsRight = 0;
-    // Keystrokes = 0;
-    // time = 0;
-    // MainMenu();
-    // console.log("Works !");
-    location.reload()
+    location.reload();
 }
