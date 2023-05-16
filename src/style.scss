@@ -7,6 +7,10 @@ $right-answer: #9bc53d;
 $wrong-answer: #e55934;
 $cursor-color: #f0f3f5;
 
+::selection {
+    background-color: $secondary-turquoise;
+}
+
 body {
     text-align: center;
     background-color: $secondary-turquoise;
@@ -23,10 +27,17 @@ body {
         background-color: $primary-turquoise;
         font-family: $Major-Mono-Display;
         padding: 7px;
+        border: none;
 
         &:focus {
             outline: none;
+
         }
+        > option:hover {
+            background-color: red !important;
+            color: orange !important;
+        }
+
     }
     
     .WordGen, .InputRest {
@@ -103,3 +114,5 @@ a {
     bottom: 10px;
     right: 10px;
 }
+
+select option:hover{background-color:yellow;}

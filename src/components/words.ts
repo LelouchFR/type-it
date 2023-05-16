@@ -3,7 +3,7 @@ const words: string[] = [
 ];
 
 const mots: string[] = [
-    "maison", "ville", "porte", "route", "homme", "femme", "amour", "voiture", "temps", "bien", "tête", "temps", "pays", "raison", "coeur", "dieu", "monde", "jour", "monsieur", "personne", "part", "chambre", "être", "avoir", "pouvoir", "faire", "mettre", "dire", "devoir", "prendre", "donner", "aller", "vouloir", "savoir", "falloir", "voir", "demander", "trouver", "rendre", "venir", "passer", "comprendre", "rester", "tenir", "porter", "parler", "montrer", "lent", "rapide", "méchant", "belle", "intelligent", "ancien", "nouveau", "triste", "heureux", "adorable", "timide", "bon", "sage", "fort", "magnifique", "merveilleux", "brave", "dynamique", "élégant", "énervé", "sombre", "mauvais", "possible", "moyen", "fatigant", "rapidement", "malheureusement", "lentement", "couramment", "egalement", "parfois", "encore", "tellement", "certainement", "probablement", "précicément", "beaucoup", "souvent", "presque", "bientôt", "cependant", "désormais", "davantage", "vraiment", "habituellement", "régurlièrement", "jamais", "partout"
+    "maison", "ville", "porte", "route", "homme", "femme", "amour", "voiture", "temps", "bien", "tête", "temps", "pays", "raison", "coeur", "dieu", "monde", "jour", "monsieur", "personne", "part", "chambre", "être", "avoir", "pouvoir", "faire", "mettre", "dire", "devoir", "prendre", "donner", "aller", "vouloir", "savoir", "falloir", "voir", "demander", "trouver", "rendre", "venir", "passer", "comprendre", "rester", "tenir", "porter", "parler", "montrer", "lent", "rapide", "méchant", "belle", "intelligent", "ancien", "nouveau", "triste", "heureux", "adorable", "timide", "bon", "sage", "fort", "magnifique", "merveilleux", "brave", "dynamique", "élégant", "énervé", "sombre", "mauvais", "possible", "moyen", "fatigant", "rapidement", "malheureusement", "lentement", "couramment", "egalement", "parfois", "encore", "tellement", "certainement", "probablement", "précisément", "beaucoup", "souvent", "presque", "bientôt", "cependant", "désormais", "davantage", "vraiment", "habituellement", "régulièrement", "jamais", "partout"
 ];
 
 const worter: string[] = [
@@ -12,6 +12,10 @@ const worter: string[] = [
 
 const palabras: string[] = [
     "el", "la", "de", "que", "y", "a", "en", "un", "ser", "se", "no", "haber", "por", "con", "su", "para", "como", "estar", "tener", "le", "lo", "todo", "pero", "hacer", "o", "poder", "decir", "este", "ir", "otro", "ese", "si", "me", "ya", "ver", "porque", "dar", "cuando", "muy", "sin", "vez", "mucho", "saber", "que", "sobre", "mi", "alguno", "mismo", "yo", "tambien", "hasta", "año", "dos", "querer", "entre", "asi", "primero", "desde", "grande", "eso", "ni", "nos", "llegar", "pasar", "tiempo", "ella", "ellas", "si", "dia", "uno", "bien", "poco", "deber", "entoces", "poner", "cosa", "tanto", "hombre", "parecer", "nuestro", "tan", "donde", "ahora", "parte", "despues", "vida", "quedar", "siempre", "creer", "hablar", "llevar", "dejar", "nada", "cada", "seguir", "menos", "nuevo", "encontrar"
-]
+];
 
-export { words, mots, worter, palabras };
+const 단어: string[] = [
+    "주", "년", "오늘", "내일", "어제", "달력", "초", "시", "분", "정각", "시계", "할수있다", "사용하다", "하다", "가다", "오다", "웃다", "만들다", "보다", "멀리", "작은", "좋은", "아름다운", "못생긴", "어려운", "쉬운", "나쁜", "가까이에", "만나서반가워요", "안녕하세요", "고마워요", "아니요", "맛있어요", "잘가요", "네", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일", "오월", "일월", "이월", "삼월", "사월", "유월", "칠월", "구월", "시월", "십일월", "십이월", "영", "일", "이", "삼", "사", "오", "육", "칠", "팔", "구", "십", "커피", "맥주", "차", "포도주", "물", "쇠고기", "돼지고기", "닭고기", "양고기", "생선", "발", "다리", "머리", "팔", "손", "손가락", "몸", "배등", "가슴", "간호사", "직원", "경찰관", "요리사", "엔지니어", "의사", "매니저", "선생님", "프로그래머", "판매원"
+];
+
+export { words, mots, worter, palabras, 단어 };
