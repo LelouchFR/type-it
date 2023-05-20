@@ -1,36 +1,28 @@
 import { words, mots, worter, palabras, 단어 } from './components/words';
+import { CalculateWPM, CalculateAcc, CalculateAWPM } from './components/calcul';
 import './style.scss';
 
 // @ts-ignore
-let WordsRight: number = 0;
-// @ts-ignore
-let Words: number = 0;
-let Keystrokes: number = 0;
-let FalseKeystrokes: number = 0;
+let [WordsRight, Words, Keystrokes, FalseKeystrokes, time]: number[] = [0, 0, 0, 0, 0];
 let lang: string;
-let time: number = 0;
+let wordlist: string[];
+
+interface WordArrays {
+    [key: string]: string[];
+}
+
+const wordArrays: WordArrays = {
+    FR: mots,
+    DE: worter,
+    ES: palabras,
+    KR: 단어,
+    EN: words
+}
 
 function getRandomWord(): string {
-    let res: string = "";
-    switch (lang) {
-        case "FR":
-            res = mots[Math.floor(Math.random() * mots.length)];
-            break;
-        case "DE":
-            res = worter[Math.floor(Math.random() * worter.length)];
-            break;
-        case "ES":
-            res = palabras[Math.floor(Math.random() * palabras.length)];
-            break;
-        case "KR":
-            res = 단어[Math.floor(Math.random() * 단어.length)];
-            break;
-        case "EN":
-        default:
-            res = words[Math.floor(Math.random() * words.length)];
-            break;
-    }
-    return res;
+    const selectedArray: string[] = wordArrays[lang] || words;
+    const randomIndex: number = Math.floor(Math.random() * selectedArray.length);
+    return selectedArray[randomIndex];
 }
 
 document.querySelector("#lang-select")?.addEventListener("change", () => {
@@ -38,24 +30,12 @@ document.querySelector("#lang-select")?.addEventListener("change", () => {
     wordlist = Array.from({ length: 11 }, () => getRandomWord());
 });
 
-function CalculateWPM(keywords: number, time: number): number {
-    return Math.round(((keywords / 5) / time));
-}
-
-function CalculateAcc(WKeystrokes: number, TKeystrokes: number): number {
-    return Math.round((WKeystrokes / TKeystrokes) * 100);
-}
-
-function CalculateAWPM(WPM: number, Acc: number): number {
-    return Math.ceil(WPM * Acc);
-}
-
-let wordlist: string[] = Array.from({ length: 11 }, () => getRandomWord());
+wordlist = Array.from({ length: 11 }, () => getRandomWord());
 
 function MainMenu(): string {
     return (`
         <section class="WordGen">
-            <p id="word">${wordlist[0]} ${wordlist[1]} ${wordlist[2]} ${wordlist[3]} ${wordlist[4]} ${wordlist[5]} ${wordlist[6]} ${wordlist[7]} ${wordlist[8]} ${wordlist[9]} ${wordlist[10]}</p>
+            <p id="word">${wordlist.join(' ')}</p>
         </section>
         <section class="InputRest">
             <input id="textInput" autocomplete="off" type="text" placeholder="start typing to race"/>
@@ -76,7 +56,7 @@ let WPM: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#W
 let counter: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#timer")!;
 
 if (textInput) {
-    textInput.addEventListener('keydown', (event) => {
+    textInput.addEventListener('keydown', (event: KeyboardEvent) => {
         if (event.code === 'Space') {
             Words++;
             if (textInput.value.replace(" ", "") === pElement.textContent!.trim().split(' ')[0]) {
@@ -85,8 +65,7 @@ if (textInput) {
                 FalseKeystrokes += textInput.value.replace(" ", "").length;
             }
             wordlist = wordLineGen(getRandomWord());
-            const randomWord = wordlist[10];
-            pElement.textContent = `${wordlist[0]} ${wordlist[1]} ${wordlist[2]} ${wordlist[3]} ${wordlist[4]} ${wordlist[5]} ${wordlist[6]} ${wordlist[7]} ${wordlist[8]} ${wordlist[9]} ${randomWord}`;
+            pElement.textContent = `${wordlist.join(' ')}`;
             textInput.value = '';
         }
     });
