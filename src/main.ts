@@ -4,8 +4,9 @@ import './style.scss';
 
 // @ts-ignore
 let [WordsRight, Words, Keystrokes, FalseKeystrokes, time]: number[] = [0, 0, 0, 0, 0];
+let [wordlist, WordSplit]: string[][] = [];
+let wrong: boolean = false;
 let lang: string;
-let wordlist: string[];
 
 interface WordArrays {
     [key: string]: string[];
@@ -40,7 +41,7 @@ function MainMenu(): string {
         <section class="InputRest">
             <input id="textInput" autocomplete="off" type="text" placeholder="start typing to race"/>
             <button id="resetButton"><i class="fa-solid fa-arrows-rotate"></i></button>
-            <p id="Acc">Keystrokes: <span id="GoodKeystrokes">${Keystrokes - FalseKeystrokes}</span> / <span id="FalseKeystrokes">${FalseKeystrokes}</span></p>
+            <p id="Acc">Keystrokes: <span class="GoodKeystrokes">${Keystrokes - FalseKeystrokes}</span> / <span class="FalseKeystrokes">${FalseKeystrokes}</span></p>
             <p id="timer">1:00</p>
             <p id="WPM">0 WPM</p>
         </section>
@@ -55,6 +56,8 @@ const AccElement: HTMLParagraphElement = document.querySelector<HTMLParagraphEle
 let WPM: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#WPM")!;
 let counter: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#timer")!;
 
+WordSplit = pElement.textContent!.trim().split(' ')[0].split('') || wordlist[0];
+
 if (textInput) {
     textInput.addEventListener('keydown', (event: KeyboardEvent) => {
         if (event.code === 'Space') {
@@ -66,7 +69,15 @@ if (textInput) {
             }
             wordlist = wordLineGen(getRandomWord());
             pElement.textContent = `${wordlist.join(' ')}`;
+            pElement.classList.remove("GoodKeystrokes");
+            pElement.classList.remove("FalseKeystrokes");
+            wrong = false;
             textInput.value = '';
+            Keystrokes--;
+        }
+
+        if (event.code === 'Backspace') {
+            Keystrokes -= 2;
         }
     });
 
@@ -74,8 +85,22 @@ if (textInput) {
         if (Keystrokes === 1) {
             countdown();
         }
+
+        wrong = false;
+
+        for (let i: number = 0; i < textInput.value.replace(' ', '').length; i++) {
+            if (textInput.value.replace(' ', '')[i] === WordSplit[i] && !wrong) {
+                pElement.classList.add("GoodKeystrokes");
+                pElement.classList.remove("FalseKeystrokes");
+            } else {
+                pElement.classList.add("FalseKeystrokes");
+                pElement.classList.remove("GoodKeystrokes");
+                wrong = true;
+            }
+        }
+
         Keystrokes++;
-        AccElement.innerHTML = `Keystrokes: <span id="GoodKeystrokes">${Keystrokes - FalseKeystrokes}</span> / <span id="FalseKeystrokes">${FalseKeystrokes}</span>`;
+        AccElement.innerHTML = `Keystrokes: <span class="GoodKeystrokes">${Keystrokes - FalseKeystrokes}</span> / <span class="FalseKeystrokes">${FalseKeystrokes}</span>`;
     });
 }
 
@@ -91,6 +116,7 @@ function countdown(): void {
                 WPM.textContent = `${CalculateAWPM(CalculateWPM(Keystrokes, time), (CalculateAcc(Keystrokes - FalseKeystrokes, Keystrokes) / 100))} WPM`;
             } else {
                 textInput.disabled = true;
+                pElement.textContent = "";
                 WPM.textContent = `${CalculateAWPM(CalculateWPM(Keystrokes, 1), (CalculateAcc(Keystrokes - FalseKeystrokes, Keystrokes) / 100))} WPM`;
             }
         }
@@ -105,6 +131,8 @@ function wordLineGen(newWord: string): string[] {
         wordlist[i] = wordlist[i + 1];
 
     wordlist.pop();
+
+    WordSplit = pElement.textContent!.trim().split(' ')[1].split('');
 
     return wordlist;
 }

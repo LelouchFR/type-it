@@ -96,8 +96,8 @@ body {
     }
 }
 
-#GoodKeystrokes {color: $right-answer}
-#FalseKeystrokes {color: $wrong-answer}
+.GoodKeystrokes {color: $right-answer}
+.FalseKeystrokes {color: $wrong-answer}
 
 a {
     color: $cursor-color;
