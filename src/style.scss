@@ -1,30 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kalam&family=Open+Sans&display=swap');
 
 $Open-Sans: 'Open Sans', sans-serif;
-$primary-turquoise: #19535f;
-$secondary-turquoise: #0b7a75;
-$right-answer: #9bc53d;
-$wrong-answer: #e55934;
-$cursor-color: #f0f3f5;
+$Kalam: 'Kalam', cursive;
+$StrongColors: #9bc53d, #e55934, #f0f3f5;
+$right-answer: nth($StrongColors, 1);
+$wrong-answer: nth($StrongColors, 2);
+$cursor-color: nth($StrongColors, 3);
 
-::selection {
-    background-color: $secondary-turquoise;
+:root {
+    --primary-color: #19535f;
+    --secondary-color: #0a7a75;
 }
+
+::selection {background-color: var(--secondary-color)}
+h1 {font-family: $Kalam}
+
 
 body {
     text-align: center;
-    background-color: $secondary-turquoise;
+    background-color: var(--secondary-color);
     color: $cursor-color;
     font-family: $Open-Sans;
     margin: 0;
 
-    select {
+    select#lang-select {
         position: absolute;
         top: 10px;
         right: 10px;
         font-size: 1rem;
         color: $cursor-color;
-        background-color: $primary-turquoise;
+        background-color: var(--primary-color);
         font-family: $Open-Sans;
         padding: 7px;
         border: none;
@@ -39,6 +44,27 @@ body {
         }
 
     }
+
+    select#color-theme {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 1rem;
+        color: $cursor-color;
+        background-color: var(--primary-color);
+        font-family: $Open-Sans;
+        padding: 7px;
+        border: none;
+
+        &:focus {
+            outline: none;
+
+        }
+        > option:hover {
+            background-color: red !important;
+            color: orange !important;
+        }
+    }
     
     .WordGen, .InputRest {
         position: relative;
@@ -46,13 +72,19 @@ body {
         left: 50%;
         transform: translate(-50%, 50%);
         width: 75%;
-        background-color: $primary-turquoise;
+        background-color: var(--primary-color);
     }
 
     .WordGen {
         padding: 1rem;
         text-align: left;
         opacity: 1;
+
+        #firstword {
+            background: rgba(#FFFFFF, .1);
+            padding: .5rem;
+            border-radius: 10px;
+        }
     }
 
     .InputRest {
@@ -63,7 +95,7 @@ body {
             border-radius: 15px;
             border: none;
             color: $cursor-color;
-            background-color: $secondary-turquoise;
+            background-color: var(--secondary-color);
             font-family: $Open-Sans;
 
             &:focus {
@@ -76,7 +108,7 @@ body {
         }
 
         #resetButton {
-            background-color: $secondary-turquoise;
+            background-color: var(--secondary-color);
             padding: .75rem;
             border-radius: 15px;
             border: none;
@@ -85,7 +117,7 @@ body {
                 color: $right-answer;
             }
 
-            &:focus {
+            &:focus, &:hover {
                 outline: none;
 
                 i {
@@ -96,21 +128,33 @@ body {
     }
 }
 
-.GoodKeystrokes {color: $right-answer}
-.FalseKeystrokes {color: $wrong-answer}
+@mixin setKeystroke($keystroke) {
+    @if $keystroke == "Good" {
+        color: $right-answer !important;
+    } @else {
+        color: $wrong-answer !important;
+    }
+}
+
+.GoodKeystrokes {@include setKeystroke("Good")}
+.FalseKeystrokes {@include setKeystroke("Wrong")}
 
 a {
     color: $cursor-color;
 }
 
 .version {
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     left: 10px;
 }
 
 .github_repo {
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     right: 10px;
+}
+
+canvas {
+    position: relative;
 }
