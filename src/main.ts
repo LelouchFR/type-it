@@ -200,7 +200,6 @@ function wordLineGen(newWord: string): string[] {
 // @ts-ignore
 colorThemeSelect.addEventListener('change', (event: Event) => {
     const selectedTheme = colorThemeSelect.value;
-    console.log(selectedTheme);
     setColors(selectedTheme);
 });
 
@@ -211,7 +210,7 @@ function getColors(theme: string): ColorThemes {
         'Oceanic Teal': { primaryColor: '#19535f', secondaryColor: '#0a7a75' },
         'Cosmic Cobalt': { primaryColor: '#3626A7', secondaryColor: '#657ED4' },
         'Nautical Night': { primaryColor: '#001524', secondaryColor: '#15616D' },
-        'Cocoa Bean': { primaryColor: '#3FA34D', secondaryColor: '#5BBA6F' },
+        'Cocoa Bean': { primaryColor: '#210F04', secondaryColor: '#452103' },
         'Botanical Garden': { primaryColor: '#3A606E', secondaryColor: '#607B7D' },
         'Deep Amethyst': { primaryColor: '#D36135', secondaryColor: '#7FB069' },
         'Muted Teal': { primaryColor: '#210F04', secondaryColor: '#452103' },
