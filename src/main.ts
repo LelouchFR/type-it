@@ -214,7 +214,7 @@ function getColors(theme: string): ColorThemes {
         'Botanical Garden': { primaryColor: '#3A606E', secondaryColor: '#607B7D' },
         'Deep Amethyst': { primaryColor: '#D36135', secondaryColor: '#7FB069' },
         'Muted Teal': { primaryColor: '#210F04', secondaryColor: '#452103' },
-        'Warm Spice': { primaryColor: '#D4AA7D', secondaryColor: '#272727' },
+        'Warm Spice': { primaryColor: '#D36135', secondaryColor: '#7FB069' },
         'Heavy Umber': { primaryColor: '#191308', secondaryColor: '#322A26' },
         'Dreamy Lavender': { primaryColor: '#685762', secondaryColor: '#190B28' },
         'Earthen Haze': { primaryColor: '#272727', secondaryColor: '#D4AA7D' },
