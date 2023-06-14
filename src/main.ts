@@ -1,5 +1,6 @@
 import { words, mots, worter, palabras, 단어 } from './components/words';
 import { CalculateWPM, CalculateAcc, CalculateAWPM } from './components/calcul';
+import { colorThemes } from './components/colorThemes';
 import { Chart } from 'chart.js/auto';
 import './style.scss';
 
@@ -10,28 +11,7 @@ let totWpm: number[] = [];
 let wrong: boolean = false;
 let lang: string;
 
-interface WpmChart {
-    type: 'line';
-    data: {
-        labels: string[];
-        datasets: {
-            label: string;
-            data: number[];
-            backgroundColor: string;
-            borderColor: string;
-            borderWidth: number;
-        }[];
-    };
-}
-
-interface ColorTheme {
-    primaryColor: string;
-    secondaryColor: string;
-}
-  
-interface ColorThemes {
-    [key: string]: ColorTheme;
-}
+type WpmChart = Chart<"line", number[], string>;
 
 interface WordArrays {
     [key: string]: string[];
@@ -61,6 +41,15 @@ document.querySelector("#lang-select")?.addEventListener("change", () => {
 wordlist = Array.from({ length: 11 }, () => getRandomWord());
 
 function MainMenu(): string {
+    if (localStorage.getItem("colorTheme") !== null) {
+        let colorThemeStorage = JSON.parse(localStorage.getItem("colorTheme")!);
+        document.documentElement.style.setProperty('--primary-color', colorThemeStorage.primaryColor);
+        document.documentElement.style.setProperty('--secondary-color', colorThemeStorage.secondaryColor);
+    } else {
+        document.documentElement.style.setProperty('--primary-color', '#19535f');
+        document.documentElement.style.setProperty('--secondary-color', '#0a7a75');
+    }
+    
     return (`
         <section class="WordGen">
             <p id="word"><span id="firstword">${wordlist[0]}</span> ${wordlist.slice(1).join(' ')}</p>
@@ -163,7 +152,7 @@ function countdown(): void {
     tick();
 }
 
-// creating a chart by using the wpm list to show the progressino your level through the minute
+// creating a chart by using the wpm list to show the progression your level through the minute
 function LoadGraph(): void {
     document.querySelector('.Graph')!.innerHTML = `<canvas id="chart" width="200" height="100"></canvas>`;
     const ctx = document.getElementById('chart') as HTMLCanvasElement;
@@ -197,37 +186,17 @@ function wordLineGen(newWord: string): string[] {
     return wordlist;
 }
 
-// @ts-ignore
-colorThemeSelect.addEventListener('change', (event: Event) => {
+colorThemeSelect.addEventListener('change', () => {
     const selectedTheme = colorThemeSelect.value;
     setColors(selectedTheme);
 });
 
-// @ts-ignore
-// function to change the color theme
-function getColors(theme: string): ColorThemes {
-    const colorThemes: ColorThemes = {
-        'Oceanic Teal': { primaryColor: '#19535f', secondaryColor: '#0a7a75' },
-        'Cosmic Cobalt': { primaryColor: '#3626A7', secondaryColor: '#657ED4' },
-        'Nautical Night': { primaryColor: '#001524', secondaryColor: '#15616D' },
-        'Cocoa Bean': { primaryColor: '#210F04', secondaryColor: '#452103' },
-        'Botanical Garden': { primaryColor: '#3FA34D', secondaryColor: '#5BBA6F' },
-        'Deep Amethyst': { primaryColor: '#190B28', secondaryColor: '#685762' },
-        'Muted Teal': { primaryColor: '#3A606E', secondaryColor: '#607B7D' },
-        'Warm Spice': { primaryColor: '#D36135', secondaryColor: '#7FB069' },
-        'Heavy Umber': { primaryColor: '#191308', secondaryColor: '#322A26' },
-        'Dreamy Lavender': { primaryColor: '#5d009f', secondaryColor: '#ae7fd0' },
-        'Earthen Haze': { primaryColor: '#272727', secondaryColor: '#D4AA7D' },
-    };
-    
-    return colorThemes;
-}
-
 function setColors(selectedTheme: string) {
-    const colorThemes = getColors(selectedTheme);
-    const theme = colorThemes[selectedTheme];
-    if (theme) {
-        const { primaryColor, secondaryColor } = theme;
+    const colorTheme = colorThemes[selectedTheme];
+    if (colorTheme) {
+        let colorThemeStored = JSON.stringify(colorTheme);
+        localStorage.setItem("colorTheme", colorThemeStored);
+        const { primaryColor, secondaryColor } = colorTheme;
         document.documentElement.style.setProperty('--primary-color', primaryColor);
         document.documentElement.style.setProperty('--secondary-color', secondaryColor);
     }

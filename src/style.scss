@@ -7,11 +7,6 @@ $right-answer: nth($StrongColors, 1);
 $wrong-answer: nth($StrongColors, 2);
 $cursor-color: nth($StrongColors, 3);
 
-:root {
-    --primary-color: #19535f;
-    --secondary-color: #0a7a75;
-}
-
 ::selection {background-color: var(--secondary-color)}
 h1 {font-family: $Kalam}
 
