@@ -48,7 +48,7 @@ function setColors(selectedTheme: string): void {
     if (colorTheme) {
         let colorThemeStored: string = JSON.stringify(colorTheme);
         localStorage.setItem("colorTheme", colorThemeStored);
-        const { primaryColor, secondaryColor } = colorTheme;
+        const { primaryColor, secondaryColor }: ColorTheme = colorTheme;
         document.documentElement.style.setProperty('--primary-color', primaryColor);
         document.documentElement.style.setProperty('--secondary-color', secondaryColor);
     }
@@ -58,47 +58,46 @@ function setColors(selectedTheme: string): void {
 function setOptions(opt: string): void {
     switch (opt) {
         case 'Oceanic Teal':
+        default:
             break;
         case 'Cosmic Cobalt':
-            swapOpt(0, 1);
+            swapOpt(colorThemeOptions, 0, 1);
             break;
         case 'Nautical Night':
-            swapOpt(0, 2);
+            swapOpt(colorThemeOptions, 0, 2);
             break;
         case 'Cocoa Bean':
-            swapOpt(0, 3);
+            swapOpt(colorThemeOptions, 0, 3);
             break;
         case 'Botanical Garden':
-            swapOpt(0, 4);
+            swapOpt(colorThemeOptions, 0, 4);
             break;
         case 'Deep Amethyst':
-            swapOpt(0, 5);
+            swapOpt(colorThemeOptions, 0, 5);
             break;
         case 'Muted Teal':
-            swapOpt(0, 6);
+            swapOpt(colorThemeOptions, 0, 6);
             break;
         case 'Warm Spice':
-            swapOpt(0, 7);
+            swapOpt(colorThemeOptions, 0, 7);
             break;
         case 'Heavy Umber':
-            swapOpt(0, 8);
+            swapOpt(colorThemeOptions, 0, 8);
             break;
         case 'Dreamy Lavender':
-            swapOpt(0, 9);
+            swapOpt(colorThemeOptions, 0, 9);
             break;
         case 'Earthen Haze':
-            swapOpt(0, 10);
-            break;
-        default:
+            swapOpt(colorThemeOptions, 0, 10);
             break;
     }
     localStorage.setItem("colorThemeOption", colorThemeOptions.join(''));
 }
 
-function swapOpt(a: number, b: number): void {
-    let temp: string = colorThemeOptions[a];
-    colorThemeOptions[a] = colorThemeOptions[b];
-    colorThemeOptions[b] = temp;
+export function swapOpt(list: string[], a: number, b: number): void {
+    let temp: string = list[a];
+    list[a] = list[b];
+    list[b] = temp;
 }
 
 export function setTheme(): void {

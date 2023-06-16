@@ -1,6 +1,7 @@
 import { words, mots, worter, palabras, 단어 } from './components/words';
 import { CalculateWPM, CalculateAcc, CalculateAWPM } from './components/calcul';
 import { setTheme } from './components/colorThemes';
+import { setLanguageOptions } from './components/chooseLang';
 import { Chart } from 'chart.js/auto';
 import './style.scss';
 
@@ -35,13 +36,18 @@ function getRandomWord(): string {
 // sets a new array with the selected language
 document.querySelector("#lang-select")?.addEventListener("change", () => {
     lang = (document.querySelector("#lang-select") as HTMLSelectElement).value;
+    localStorage.setItem("Language", lang);
     wordlist = Array.from({ length: 11 }, () => getRandomWord());
 });
+
+const language = localStorage.getItem("Language")!;
+lang = language;
 
 wordlist = Array.from({ length: 11 }, () => getRandomWord());
 
 function MainMenu(): string {
     setTheme();
+    setLanguageOptions(lang);
     
     return (`
         <section class="WordGen">
