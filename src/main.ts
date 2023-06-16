@@ -55,7 +55,7 @@ function MainMenu(): string {
         </section>
         <section class="InputRest">
             <input id="textInput" autocomplete="off" type="text" placeholder="start typing to race"/>
-            <button id="resetButton"><i class="fa-solid fa-arrows-rotate"></i></button>
+            <button id="resetButton" aria-label="Reset Button"><i class="fa-solid fa-arrows-rotate"></i></button>
             <p id="Acc">Keystrokes: <span class="GoodKeystrokes textcolored">${Keystrokes - FalseKeystrokes}</span> / <span class="FalseKeystrokes textcolored">${FalseKeystrokes}</span></p>
             <p id="timer">1:00</p>
             <p id="WPM">0 WPM</p>
