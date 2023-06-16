@@ -1,11 +1,11 @@
 import { words, mots, worter, palabras, 단어 } from './components/words';
 import { CalculateWPM, CalculateAcc, CalculateAWPM } from './components/calcul';
-import { colorThemes } from './components/colorThemes';
+import { setTheme } from './components/colorThemes';
 import { Chart } from 'chart.js/auto';
 import './style.scss';
 
 const [RIGHT_COLOR, WRONG_COLOR]: string[] = ["#9bc53d", "#e55934"];
-let [Keystrokes, FalseKeystrokes, time]: number[] = [0, 0, 0, 0, 0];
+let [Keystrokes, FalseKeystrokes, time]: number[] = [0, 0, 0];
 let [wordlist, WordSplit]: string[][] = [];
 let totWpm: number[] = [];
 let wrong: boolean = false;
@@ -41,14 +41,7 @@ document.querySelector("#lang-select")?.addEventListener("change", () => {
 wordlist = Array.from({ length: 11 }, () => getRandomWord());
 
 function MainMenu(): string {
-    if (localStorage.getItem("colorTheme") !== null) {
-        let colorThemeStorage = JSON.parse(localStorage.getItem("colorTheme")!);
-        document.documentElement.style.setProperty('--primary-color', colorThemeStorage.primaryColor);
-        document.documentElement.style.setProperty('--secondary-color', colorThemeStorage.secondaryColor);
-    } else {
-        document.documentElement.style.setProperty('--primary-color', '#19535f');
-        document.documentElement.style.setProperty('--secondary-color', '#0a7a75');
-    }
+    setTheme();
     
     return (`
         <section class="WordGen">
@@ -73,7 +66,6 @@ const pElementFirstWord: HTMLSpanElement = document.querySelector<HTMLSpanElemen
 const AccElement: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>('#Acc')!;
 const WPM: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#WPM")!;
 const counter: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#timer")!;
-const colorThemeSelect: HTMLSelectElement = document.querySelector('#color-theme')!;
 
 WordSplit = pElement.textContent!.trim().split(' ')[0].split('') || wordlist[0];
 
@@ -184,22 +176,6 @@ function wordLineGen(newWord: string): string[] {
     WordSplit = pElement.textContent!.trim().split(' ')[1].split('');
 
     return wordlist;
-}
-
-colorThemeSelect.addEventListener('change', () => {
-    const selectedTheme = colorThemeSelect.value;
-    setColors(selectedTheme);
-});
-
-function setColors(selectedTheme: string) {
-    const colorTheme = colorThemes[selectedTheme];
-    if (colorTheme) {
-        let colorThemeStored = JSON.stringify(colorTheme);
-        localStorage.setItem("colorTheme", colorThemeStored);
-        const { primaryColor, secondaryColor } = colorTheme;
-        document.documentElement.style.setProperty('--primary-color', primaryColor);
-        document.documentElement.style.setProperty('--secondary-color', secondaryColor);
-    }
 }
 
 // reset
